@@ -40,13 +40,13 @@ RetCode M3::startPlayerEventLoop(){
     PlayBackAddons pb;
     SplashScreenLogo spsl;
 
-    InitAudioDevice();
+    //InitAudioDevice();
     
-    string filePath = getFileNameUsingWinDialog();
-    Music musicStream = LoadMusicStream(filePath.c_str()); 
-    PlayMusicStream(musicStream);
+    //string filePath = getFileNameUsingWinDialog();
+    //Music musicStream = LoadMusicStream(filePath.c_str()); 
+    //PlayMusicStream(musicStream);
  
-    pb.isPlaying = true;
+    pb.isPlaying = false;
     
     float timePlayedPercent = 0.0f;
     float currMusicTime, totalMusicTime; 
@@ -56,9 +56,9 @@ RetCode M3::startPlayerEventLoop(){
 
         setUpdatedWindowSize(&m3WinState); 
         
-        UpdateMusicStream(musicStream);
+        //UpdateMusicStream(musicStream);
 
-        timePlayedPercent = GetMusicTimePlayed(musicStream)/GetMusicTimeLength(musicStream); 
+        timePlayedPercent = 0;//GetMusicTimePlayed(musicStream)/GetMusicTimeLength(musicStream); 
         
         BeginDrawing();
         
@@ -71,8 +71,8 @@ RetCode M3::startPlayerEventLoop(){
 
         if (timePlayedPercent > 1.0f) timePlayedPercent = 1.0f; // dont let the timePlayed go higher than orignal lenght;
         
-        currMusicTime = GetMusicTimePlayed(musicStream);
-        totalMusicTime = GetMusicTimeLength(musicStream);
+        currMusicTime = 0;//GetMusicTimePlayed(musicStream);
+        totalMusicTime = 0;//GetMusicTimeLength(musicStream);
 
         tl.renderTimeLine(&m3WinState, timePlayedPercent, currMusicTime, totalMusicTime);
 
@@ -95,7 +95,7 @@ RetCode M3::startPlayerEventLoop(){
             case 5: musicVol = 1.0; break;
         }
 
-        SetMusicVolume(musicStream, musicVol);
+        //SetMusicVolume(musicStream, musicVol);
         
         Event ev2 = vc.checkEventTriggered();  
         vc.processEvent(ev2);
@@ -106,21 +106,21 @@ RetCode M3::startPlayerEventLoop(){
         Event ev3 = pb.checkEventTriggered();
         
         if(ev3 == STATE_STOP_MUSIC){
-            PauseMusicStream(musicStream);
+            //PauseMusicStream(musicStream);
         }
 
         else if(ev3 == STATE_PLAY_MUSIC){
-            ResumeMusicStream(musicStream);
+            //ResumeMusicStream(musicStream);
         }
         else if(ev3 == SEEK_BACK){
             // seek 2 secs backward
-            SeekMusicStream(musicStream,  GetMusicTimePlayed(musicStream) - 2.0);
+            //SeekMusicStream(musicStream,  GetMusicTimePlayed(musicStream) - 2.0);
         }
         
 
         else if(ev3 == SEEK_AHEAD){ 
             // seek 2 secs forward
-            SeekMusicStream(musicStream,  GetMusicTimePlayed(musicStream) + 2.0);
+            //SeekMusicStream(musicStream,  GetMusicTimePlayed(musicStream) + 2.0);
         }
         
         
@@ -140,8 +140,8 @@ RetCode M3::startPlayerEventLoop(){
         EndDrawing();
         }
 
-    UnloadMusicStream(musicStream);
-    CloseAudioDevice();
+    //UnloadMusicStream(musicStream);
+    //CloseAudioDevice();
     
     return SUCCESS;
 }

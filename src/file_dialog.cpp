@@ -1,7 +1,9 @@
 #include "file_dialog.h"
+
+#ifdef PLATFORM_WINDOWS
 #include <Windows.h>
 
-std::string getFileNameUsingWinDialog(){
+std::string getFileNameDialog(){
     // Reference: https://learn.microsoft.com/en-us/windows/win32/dlgbox/using-common-dialog-boxes#opening-a-file
     // Above provides the link to common box dialog window api that we are using yo open a file diaglog to open a file.
     OPENFILENAME mediaFile;
@@ -28,3 +30,12 @@ std::string getFileNameUsingWinDialog(){
     
     return std::string(mediaFile.lpstrFile);
 }
+
+
+#else
+
+std::string getFileNameDialog(){
+    return "";
+}
+
+#endif // PLATFORM_WINDOWS
